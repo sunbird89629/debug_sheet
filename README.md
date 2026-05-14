@@ -37,5 +37,5 @@ final index = await showModalBottomSheet<int>(
 dependencies:
   debug_sheet:
     git:
-      url: https://github.com/YOUR_HANDLE/debug_sheet.git
+      url: https://github.com/sunbird89629/debug_sheet.git
 ```
