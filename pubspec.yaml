@@ -1,0 +1,19 @@
+name: debug_sheet
+description: Debug-time bottom sheets for Flutter — text input with history and single-select list.
+version: 0.1.0
+homepage: https://github.com/YOUR_HANDLE/debug_sheet
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  crypto: ^3.0.3
+  get_storage: ^2.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
