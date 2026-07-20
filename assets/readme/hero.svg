@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1200" height="400" viewBox="0 0 1200 400"
+     role="img" aria-labelledby="heroTitle heroDesc">
+  <title id="heroTitle">debug_sheet — drop-in debug bottom sheets for Flutter</title>
+  <desc id="heroDesc">A dark app screen with a light Material bottom sheet titled "H5 URL" rising from the bottom edge, listing three previously entered URLs with delete buttons, a text field and an OK button.</desc>
+
+  <defs>
+    <clipPath id="frame">
+      <rect width="1200" height="400" rx="26"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <!-- scrimmed app behind the sheet -->
+    <rect width="1200" height="400" fill="#0C1117"/>
+
+    <g id="title-block" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif">
+      <text x="64" y="86" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+            font-size="13" letter-spacing="2.4" fill="#5C82C4">FLUTTER PACKAGE · DEBUG-TIME UI</text>
+
+      <text x="64" y="156" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+            font-size="60" font-weight="700" fill="#EAF0F6" letter-spacing="-1">debug_sheet</text>
+
+      <text x="64" y="204" font-size="20" fill="#AEBBC7">Two drop-in bottom sheets for your in-app</text>
+      <text x="64" y="232" font-size="20" fill="#AEBBC7">debug menu — one remembers every URL you</text>
+      <text x="64" y="260" font-size="20" fill="#AEBBC7">ever typed. Both return a typed result.</text>
+
+      <rect x="64" y="286" width="512" height="46" rx="10" fill="#131A22" stroke="#222C38"/>
+      <text x="82" y="315" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+            font-size="15" fill="#8FA6BD">await showModalBottomSheet&lt;<tspan fill="#6FA8FF">String</tspan>&gt;(...)</text>
+
+      <text x="64" y="366" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+            font-size="14" fill="#63707E">MIT · Dart ≥3.0 · 2 widgets · no platform channels</text>
+    </g>
+
+    <!-- the sheet itself: the whole product -->
+    <g id="bottom-sheet">
+      <path d="M660 126 a22 22 0 0 1 22 -22 h440 a22 22 0 0 1 22 22 v290 h-484 z" fill="#F6F8FA"/>
+
+      <rect x="880" y="118" width="44" height="5" rx="2.5" fill="#C4CED8"/>
+
+      <text x="692" y="170" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="25" font-weight="600" fill="#141C25">H5 URL</text>
+
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" fill="#2B3844">
+        <text x="692" y="209">https://staging.example.com/h5</text>
+        <text x="692" y="249">http://192.168.1.14:8080</text>
+        <text x="692" y="289">https://demo.acme.dev/h5</text>
+      </g>
+
+      <g stroke="#E3E8EE" stroke-width="1">
+        <line x1="692" y1="224" x2="1112" y2="224"/>
+        <line x1="692" y1="264" x2="1112" y2="264"/>
+        <line x1="692" y1="304" x2="1112" y2="304"/>
+      </g>
+
+      <!-- delete buttons -->
+      <g fill="none" stroke="#93A1AE" stroke-width="1.6" stroke-linecap="round">
+        <g transform="translate(1096 196)">
+          <path d="M-7 0 h14 M-5 0 v9 a2 2 0 0 0 2 2 h6 a2 2 0 0 0 2 -2 v-9 M-2 -3 h4"/>
+        </g>
+        <g transform="translate(1096 236)">
+          <path d="M-7 0 h14 M-5 0 v9 a2 2 0 0 0 2 2 h6 a2 2 0 0 0 2 -2 v-9 M-2 -3 h4"/>
+        </g>
+        <g transform="translate(1096 276)">
+          <path d="M-7 0 h14 M-5 0 v9 a2 2 0 0 0 2 2 h6 a2 2 0 0 0 2 -2 v-9 M-2 -3 h4"/>
+        </g>
+      </g>
+
+      <!-- text field -->
+      <text x="692" y="339" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+            font-size="16" fill="#141C25">https://</text>
+      <rect x="774" y="323" width="2" height="19" fill="#3D7EFF"/>
+      <line x1="692" y1="350" x2="1112" y2="350" stroke="#141C25" stroke-width="1.6"/>
+
+      <!-- OK -->
+      <rect x="692" y="362" width="420" height="40" rx="8" fill="#3D7EFF"/>
+      <text x="902" y="388" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="16" font-weight="600" fill="#FFFFFF" letter-spacing="0.6">OK</text>
+    </g>
+  </g>
+</svg>
