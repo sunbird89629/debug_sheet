@@ -1,21 +1,30 @@
-# debug_sheet
+<p align="center">
+  <img src="./assets/readme/hero.svg" width="100%"
+       alt="debug_sheet — two drop-in bottom sheets for your in-app Flutter debug menu, one of which remembers every URL you have typed">
+</p>
 
-Zero-friction bottom sheets for **in-app debug menus** in Flutter — a text-input sheet that
-**remembers past inputs**, and a single-select radio list. Both return typed results via
-`Navigator.pop`, so they drop straight into any existing `showModalBottomSheet` flow.
+<p align="center">
+  <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-3D7EFF"></a>
+  <img alt="Dart 3.0 or newer" src="https://img.shields.io/badge/dart-%E2%89%A53.0-30363d">
+  <img alt="Flutter 3.0 or newer" src="https://img.shields.io/badge/flutter-%E2%89%A53.0-30363d">
+</p>
 
-Built for the common case where you want a hidden dev drawer that lets you paste a test URL,
-switch WebView engines, toggle feature flags, etc. — without wiring up a whole settings screen.
+Every app ends up with a hidden dev drawer: paste a staging URL, switch WebView engines,
+flip a feature flag. Building that means a `TextField`, a controller, somewhere to remember
+what you typed last time, and a screen to put it all on.
 
-## Features
+`debug_sheet` is those two screens, already built. Call `showModalBottomSheet`, `await` the
+result, move on.
 
-- **`DebugInputSheet`** — text field with a **persistent history list** (per-title, MD5-keyed
-  in `get_storage`). Enter a URL once, next time it's one tap away. Swipe or long-press to
-  remove a stale entry.
-- **`DebugSelectSheet`** — radio list that returns the chosen index. No setup, no controllers.
-- Pure Flutter widgets — no platform channels, no BuildContext gymnastics.
+## The two sheets
 
-## Install
+<img src="./assets/readme/sheets.svg" width="100%"
+     alt="DebugInputSheet returns a Future of nullable String — the field's text when OK is tapped. DebugSelectSheet returns a Future of nullable int — the index of the checked item.">
+
+Neither takes a controller, a callback, or a builder. Both hand you a value back through
+`Navigator.pop`, so they slot into any `showModalBottomSheet` call you already have.
+
+## Quick start
 
 ```yaml
 dependencies:
@@ -24,8 +33,7 @@ dependencies:
       url: https://github.com/sunbird89629/debug_sheet.git
 ```
 
-Because it uses [`get_storage`](https://pub.dev/packages/get_storage) for history, initialize
-it once at startup:
+History is stored with [`get_storage`](https://pub.dev/packages/get_storage), so initialize it once:
 
 ```dart
 void main() async {
@@ -35,22 +43,48 @@ void main() async {
 }
 ```
 
-## Usage
-
-### `DebugInputSheet` — text input with history
+Then ask for a URL:
 
 ```dart
 final url = await showModalBottomSheet<String>(
   context: context,
-  isScrollControlled: true, // recommended: sheet resizes for the keyboard
+  isScrollControlled: true, // lets the sheet resize around the keyboard
   builder: (_) => const DebugInputSheet(title: 'H5 URL'),
 );
-// url: the entered/tapped string, or null if dismissed
+if (url != null) loadWebView(url);
 ```
 
-The `title` doubles as the storage key — sheets with the same title share history.
+Type it once. Every time after that it's sitting in the list, one tap away.
 
-### `DebugSelectSheet` — single-select radio list
+## `DebugInputSheet`
+
+A text field with a persistent history list above it.
+
+```dart
+const DebugInputSheet({required String title})  // → Future<String?>
+```
+
+`title` is both the heading and the storage key. The sheet returns the field's contents when
+**OK** is tapped, or `null` if the field was empty or the sheet was dismissed.
+
+How the list behaves:
+
+- Every non-empty value you confirm is appended to the history for that `title`.
+- **Tapping** a row copies it into the text field — it does not close the sheet. Edit it or tap
+  **OK** to confirm.
+- The **trash icon** on the right removes that row permanently.
+- The storage key is `md5(title)`, so two sheets sharing a title share one history — and
+  renaming a sheet starts an empty one.
+
+## `DebugSelectSheet`
+
+A single-select radio list.
+
+```dart
+const DebugSelectSheet({required String title, required List<String> items})  // → Future<int?>
+```
+
+Pick which WebView the debug build should use:
 
 ```dart
 final index = await showModalBottomSheet<int>(
@@ -60,19 +94,38 @@ final index = await showModalBottomSheet<int>(
     items: ['New WebView', 'Old WebView'],
   ),
 );
-// index: the tapped item's index, or null if dismissed
 ```
+
+`items` becomes the rows, in order; the sheet returns the index of the checked one, or `null`
+if dismissed.
+
+The first row starts checked, so tapping **OK** without touching anything returns `0`, not
+`null`. There is no parameter for the initial selection yet.
+
+## Good to know
+
+- **Debug-time UI.** These sheets use plain Material defaults and no theming hooks — they're
+  meant for a drawer your users never open, not for production surfaces.
+- **History is uncapped.** Duplicates are skipped, but the list grows until you delete rows
+  by hand.
+- **Not on pub.dev.** Depend on it via git, as shown above.
 
 ## Example
 
-A runnable demo lives in [`example/`](./example) — a home page with two buttons that open
-each sheet and show the result.
+A runnable demo lives in [`example/`](./example) — one page, two buttons, showing the result
+each sheet returns.
 
 ```bash
 cd example
 flutter run
 ```
 
+## Development
+
+```bash
+flutter test    # 9 widget tests covering both sheets
+```
+
 ## License
 
-MIT
+MIT — see [LICENSE](./LICENSE).
