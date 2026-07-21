@@ -123,6 +123,55 @@ void main() {
       );
     });
 
+    testWidgets('most recent item is first in history', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Builder(
+            builder: (context) => ElevatedButton(
+              onPressed: () => showModalBottomSheet<String>(
+                context: context,
+                isScrollControlled: true,
+                builder: (_) => const DebugInputSheet(title: 'Enter URL'),
+              ),
+              child: const Text('Open'),
+            ),
+          ),
+        ),
+      );
+
+      Future<void> openSheet() async {
+        await tester.tap(find.text('Open'));
+        await tester.pumpAndSettle();
+      }
+
+      Future<void> confirm(String text) async {
+        await openSheet();
+        await tester.enterText(find.byType(TextFormField), text);
+        await tester.tap(find.text('OK'));
+        await tester.pumpAndSettle();
+      }
+
+      List<String?> history() => tester
+          .widgetList<ListTile>(find.byType(ListTile))
+          .map((tile) => (tile.title as Text).data)
+          .toList();
+
+      await confirm('https://first.com');
+      await confirm('https://second.com');
+
+      await openSheet();
+      expect(history(), ['https://second.com', 'https://first.com']);
+
+      // Confirming a value already in history moves it back to the top.
+      await tester.tap(find.text('https://first.com'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('OK'));
+      await tester.pumpAndSettle();
+
+      await openSheet();
+      expect(history(), ['https://first.com', 'https://second.com']);
+    });
+
     testWidgets('delete icon removes history item', (tester) async {
       await tester.pumpWidget(
         MaterialApp(

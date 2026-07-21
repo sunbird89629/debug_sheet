@@ -69,7 +69,9 @@ const DebugInputSheet({required String title})  // → Future<String?>
 
 How the list behaves:
 
-- Every non-empty value you confirm is appended to the history for that `title`.
+- Every non-empty value you confirm goes to the top of the history for that `title`, so the
+  list reads most-recent-first. Confirming a value that's already there moves it back up
+  rather than duplicating it.
 - **Tapping** a row copies it into the text field — it does not close the sheet. Edit it or tap
   **OK** to confirm.
 - The **trash icon** on the right removes that row permanently.
@@ -106,8 +108,8 @@ The first row starts checked, so tapping **OK** without touching anything return
 
 - **Debug-time UI.** These sheets use plain Material defaults and no theming hooks — they're
   meant for a drawer your users never open, not for production surfaces.
-- **History is uncapped.** Duplicates are skipped, but the list grows until you delete rows
-  by hand.
+- **History is uncapped.** Duplicates are folded into one entry, but the list grows until you
+  delete rows by hand.
 - **Not on pub.dev.** Depend on it via git, as shown above.
 
 ## Example
@@ -123,7 +125,7 @@ flutter run
 ## Development
 
 ```bash
-flutter test    # 9 widget tests covering both sheets
+flutter test    # 10 widget tests covering both sheets
 ```
 
 ## License

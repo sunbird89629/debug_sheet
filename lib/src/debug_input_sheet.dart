@@ -20,9 +20,9 @@ class _DebugInputSheetState extends State<DebugInputSheet> {
       (GetStorage().read<List>(_storageKey) ?? []).cast<String>();
 
   void _saveItem(String item) {
-    final items = _cachedItems;
-    if (items.contains(item)) return;
-    items.add(item);
+    final items = _cachedItems
+      ..remove(item)
+      ..insert(0, item);
     GetStorage().write(_storageKey, items);
   }
 

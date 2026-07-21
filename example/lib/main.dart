@@ -50,6 +50,12 @@ class _HomePageState extends State<HomePage> {
               },
               child: const Text('Open DebugInputSheet'),
             ),
+            const SizedBox(height: 8),
+            Text(
+              'Confirm a few different URLs, then reopen the sheet — the one '
+              'you just used sits at the top of the history.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
             const SizedBox(height: 32),
             Text('Select result: index $_selectResult'),
             const SizedBox(height: 12),

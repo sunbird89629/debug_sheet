@@ -4,3 +4,8 @@ build/
 pubspec.lock
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# get_storage files written into the repo root by `flutter test`,
+# whose path_provider mock points at the current directory
+GetStorage.gs
+GetStorage.bak
